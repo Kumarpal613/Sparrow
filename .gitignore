@@ -1,0 +1,11 @@
+# Ignore local environment files
+.env
+frontend/.env
+backend/.env
+# Python
+__pycache__/
+*.pyc
+# Node
+node_modules/
+.DS_Store
+
