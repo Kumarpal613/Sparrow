@@ -1,11 +1,9 @@
 import axios from "axios";
 
-// Base URL configuration (can be moved to .env later)
-// Use standard port 8000 for FastAPI
-export const API_BASE_URL = "";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export const apiClient = axios.create({
-  baseURL: "",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

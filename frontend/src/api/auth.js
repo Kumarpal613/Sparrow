@@ -1,4 +1,4 @@
-import { apiClient, API_BASE_URL } from "./client";
+import { apiClient } from "./client";
 import axios from "axios";
 
 export const authApi = {

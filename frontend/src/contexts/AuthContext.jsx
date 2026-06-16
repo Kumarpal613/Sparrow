@@ -27,12 +27,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
+    try {
+ 
     const data = await authApi.login(username, password);
-    if (data.access_token) {
-      localStorage.setItem("access_token", data.access_token);
-      const profile = await authApi.getMe();
-      setUser(profile);
+    if (!data?.access_token) {
+      throw new Error("No access token received");
     }
+    localStorage.setItem("access_token", data.access_token);
+
+    const profile = await authApi.getMe();
+    setUser(profile);
+    return true; // success
+  } catch (err) {
+    throw err; // VERY IMPORTANT → so UI knows login failed
+  }
   };
 
   const googleLogin = async (idToken) => {

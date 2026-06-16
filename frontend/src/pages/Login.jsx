@@ -37,54 +37,6 @@ const Login = () => {
     }
   };
 
-  const handleCredentialResponse = useCallback(
-    async (response) => {
-      if (!response?.credential) {
-        setError("Google did not return a valid credential.");
-        return;
-      }
-
-      setIsLoading(true);
-      try {
-        await googleLogin(response.credential);
-        navigate(from, { replace: true });
-      } catch (err) {
-        setError("Google login failed. Please try again.");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [googleLogin, navigate, from],
-  );
-
-  useEffect(() => {
-    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    console.log(
-      "Google Client ID:",
-      clientId,
-      "Origin:",
-      window.location.origin,
-    );
-    if (!clientId || !window.google?.accounts?.id) {
-      return;
-    }
-
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCredentialResponse,
-    });
-  }, [handleCredentialResponse]);
-
-  const handleGoogleLogin = async () => {
-    setError("");
-    if (!window.google?.accounts?.id) {
-      setError("Google authentication is not available yet.");
-      return;
-    }
-
-    window.google.accounts.id.prompt();
-  };
-
   return (
     <div className="auth-card glass-panel animate-fade-in">
       <div className="auth-header">
@@ -153,14 +105,7 @@ const Login = () => {
           flexDirection: "column",
           gap: "1rem",
         }}
-      >
-        <Button
-          variant="secondary"
-          onClick={handleGoogleLogin}
-          style={{ width: "100%", backgroundColor: "#4285F4", color: "#fff" }}
-        >
-          Continue with Google
-        </Button>
+      > 
       </div>
 
       <div
